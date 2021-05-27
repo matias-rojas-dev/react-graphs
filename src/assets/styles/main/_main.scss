@@ -1,0 +1,149 @@
+.main_view{
+    width: 100%;
+    padding: 10px;
+
+
+    .main_options{
+        display: flex;
+        width: 500px;
+        padding: 30px;
+        flex-direction: column;
+        overflow-y: scroll;
+        height: 80vh;
+    }
+}
+
+.MuiButton-containedPrimary{
+    margin: 10px !important;
+}
+
+.main_noMatriz{
+    display: none;
+}
+
+
+p.main_p{
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.main_links{
+    margin-top: 100px;
+}
+
+.distanceFromTo{
+    background: rgb(204, 204, 204);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 5px;
+
+    p{
+        margin: 10px;
+        font-weight: bold;
+    }
+}
+
+.main_distanceItem{
+    background: #83cbfb;
+    margin: 10px 210px !important;
+    padding: 6px;
+    border-radius: 50%;
+    border: 1px solid black;
+
+}
+
+.main_contentInside{
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.main_isHamiltonianOrEulerian{
+    background: red;
+}
+
+.main_contentInside{
+
+    .content{
+
+        .diagram-component{
+            margin: 7px;
+            height: 200px;
+            width: 450px !important;
+            canvas{
+                color: white !important;
+            }
+        }
+    }
+}
+
+.main_boxMiniItem{
+    color: black !important;
+}
+
+.main_boxItem {
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+    width: 100%;
+    text-align: center;
+    background: rgb(204, 204, 204);
+    justify-content: space-evenly;
+
+}
+
+.main_buttonMargin{
+    margin: 10px;
+}
+
+.item{
+    margin: 10px;
+    border: 10px solid rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.main_pathOrCycle {
+    background: #83cbfb;
+    margin: 10px 200px !important;
+    padding: 6px;
+    border-radius: 50%;
+    border: 1px solid black;
+
+}
+
+hr{
+    height: 80px;
+    width: 100%;
+    border: none;
+}
+
+
+.MuiButton-label:hover .main_reloadIcon{
+    transform: rotate(2000deg);
+    transition: all 10s ease-out;
+}
+
+// https://www.w3schools.com/howto/howto_css_shake_image.asp
+
+.MuiButton-label:hover .main_deleteIcon{
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+    0.50% { transform: translate(-0.5px, -2px) rotate(-0.5deg); }
+    20% { transform: translate(-3px, 0px) rotate(0.5deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(0.5px, -0.5px) rotate(0.5deg); }
+    50% { transform: translate(-0.5px, 2px) rotate(-0.5deg); }
+    60% { transform: translate(-3px, 0.5px) rotate(0deg); }
+    70% { transform: translate(3px, 0.5px) rotate(-0.5deg); }
+    80% { transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
+    90% { transform: translate(0.5px, 2px) rotate(0deg); }
+    0.500% { transform: translate(0.5px, -2px) rotate(-0.5deg); }
+  }
