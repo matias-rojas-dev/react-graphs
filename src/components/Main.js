@@ -81,7 +81,7 @@ function RowLink({ onChange, onRemove, from, to, text }) {
             </Box>
         </FormControl>
     );
-};
+}
 
 const Main = () => {
 
@@ -141,12 +141,10 @@ const Main = () => {
 
     };
 
-    // grafoClass => función para poder crear 
     const grafoClass = (from, to, peso) => {
         const numberFrom = Number(from);
         const numberTo = Number(to);
         const numberPeso = Number(peso);
-
         const listaDeAdyacencia = [
             [numberFrom, [new Adyacente(numberTo, numberPeso)]],
         ];
@@ -154,35 +152,21 @@ const Main = () => {
     };
 
     const previewValidation = () => {
-
-        if(rows[0].length === 0 || links[0].from.length === 0){
+        (rows[0].length === 0 || links[0].from.length === 0) ? (
             swal('Campos vacíos','Para continuar con la aplicación, debes completar los campos vacíos', 'error')
-        }
-        else {
-            setValidation(true);
-        }
+        ) : setValidation(true);
     }
 
 
     const saveData = () => {
-
         previewValidation();
-        
-
         if(validation === true){
-
             setSaveAllData(true);
-            // Implementanción del grafo
             const gra = new Grafo(new Map(grafo), true);
-
-
             const {esEuleriano , esHamiltoniano, esConexo, matrizDeCaminos} = gra;
             const { arbol } = gra.arbolGeneradorMinimo;
-    
-            // Distancia entre dos nodos y camino más corto
             const distanceShortes = gra.caminoMasCorto(distanceFrom , distanceTo).distancia;
             const shortPathGraph = gra.caminoMasCorto(distanceFrom, distanceTo).camino;
-            // Flujo máximo
             const peak = gra.flujoMaximo(peakFlowFrom, peakFlowTo);
     
             setArbolGenerador(arbol);
@@ -197,9 +181,7 @@ const Main = () => {
             setEulerianCycle(gra.euleriano(Trayecto.ciclo))
             setHamiltonianPath(gra.hamiltoniano(Trayecto.camino))
             setHamiltonianCycle(gra.hamiltoniano(Trayecto.ciclo))
-        }
-
-
+        } else console.log('error')
 
     };
 
@@ -208,26 +190,6 @@ const Main = () => {
         window.location.reload(); 
     }
 
-    const handleArbol = () => {
-        !doneFetchArbol ? (setDoneFetchArbol(true)) : setDoneFetchArbol(false);
-    };
-
-    const handleFlujoMaximo = () => {
-        !doneFetchFlujoMaximo ? (setDoneFetchFlujoMaximo(true)) : setDoneFetchFlujoMaximo(false);
-    };
-
-    const handleDistance = () => {
-        !doneFetchDistance ? (setDoneFetchDistance(true)) : setDoneFetchDistance(false);
-
-    };
-
-    const handleHamEul = () => {
-        !doneFetchHamEul ? (setDoneFetchHamEul(true)) : setDoneFetchHamEul(false);
-    };
-
-    const handleMatriz = () => {
-        !doneFetch ? (setDoneFetch(true)) : setDoneFetch(false);
-    };
 
     const handleOnChange = (index, text, value) => {
         const copyRows = [...rows];
@@ -243,7 +205,7 @@ const Main = () => {
 
     const handleOnAdd = () => {
         let len = rows.length - 1;
-        rows[len].text.length > 0 ? (setRows(rows.concat(defaultState))) : swal('Error en los nodos', 'Campos vacíos, por favor asigne nombre a los nodos creados', 'error');
+        rows[len].text.length > 0 ? setRows(rows.concat(defaultState)) : swal('Error en los nodos', 'Campos vacíos, por favor asigne nombre a los nodos creados', 'error');
     };
 
     const handleOnAddLink = () => {
@@ -267,7 +229,6 @@ const Main = () => {
     };
 
     const handleOnChangeLinks = (index, from, value, text, to) => {
-        // links cambios agregar
         const copyLinks = [...links];
         copyLinks[index] = {
             ...copyLinks[index],
@@ -276,7 +237,6 @@ const Main = () => {
             [text]: value,
         };
         setLinks(copyLinks);
-        //Guardar en clase
         if (copyLinks[index].from && copyLinks[index].to && copyLinks[index].text)
             saveArista(copyLinks[index].from, copyLinks[index].to, copyLinks[index].text)
     };
@@ -290,11 +250,7 @@ const Main = () => {
             setLinks(copyLinks);
         }
         saveData();
-        console.log('2')
     };
-
-
-    // Obtener valores desde y hasta para implementar Dijkstra
     
     const handleSubmitFromTo = (e) => {
         e.preventDefault();
@@ -308,7 +264,7 @@ const Main = () => {
             [e.target.name]: e.target.value,
         })
         
-    }
+    };
 
     const handleSubmitPeak = (e) => {
         e.preventDefault();
@@ -338,11 +294,6 @@ const Main = () => {
         })        
     };
 
-
-
-
-
-
     return (
         <Box display='flex' className='main_view'>
             <div className='main_options'>
@@ -371,7 +322,6 @@ const Main = () => {
                 ))}
 
                 <div>
-
                     {
                         (links.length < 1 || rows.length < 1 ) ? (
                             <Button m={10}
