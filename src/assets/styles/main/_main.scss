@@ -41,14 +41,13 @@ p.main_p{
     border-radius: 5px;
 
     p{
-        margin: 10px;
         font-weight: bold;
     }
 }
 
 .main_distanceItem{
     background: #83cbfb;
-    margin: 10px 210px !important;
+    margin: 10px 213px !important;
     padding: 6px;
     border-radius: 50%;
     border: 1px solid black;
@@ -65,20 +64,16 @@ p.main_p{
     background: red;
 }
 
-.main_contentInside{
-
-    .content{
-
-        .diagram-component{
-            margin: 7px;
-            height: 200px;
-            width: 450px !important;
-            canvas{
-                color: white !important;
-            }
-        }
+.main_contentInside .content .diagram-component{
+    margin: 7px;
+    height: 200px;
+    width: 450px !important;
+    canvas{
+        color: white !important;
     }
 }
+    
+
 
 .main_boxMiniItem{
     color: black !important;
@@ -86,7 +81,6 @@ p.main_p{
 
 .main_boxItem {
     display: flex ;
-    justify-content: center;
     align-items: center;
     margin: 0px auto;
     width: 100%;
@@ -108,7 +102,7 @@ p.main_p{
 
 .main_pathOrCycle {
     background: #83cbfb;
-    margin: 10px 200px !important;
+    margin: 10px 400px !important;
     padding: 6px;
     border-radius: 50%;
     border: 1px solid black;

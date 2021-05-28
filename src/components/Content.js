@@ -38,14 +38,6 @@ function initDiagram() {
         {font: "30px Verdana" },                     // this is a Link label
         new go.Binding("text", "text"))
     );
-
-
-  //* PARA MOSTRAR LÍNEAS DEBEN HABILITAR ESTE CÓDIGO COMENTADO
-  /*diagram.linkTemplate =
-  $(go.Link,       
-  $(go.Shape)  
-  );
-  */
   return diagram;
 }
 

@@ -34,7 +34,7 @@ function Row({ onChange, onRemove, text }) {
 }
 
 function RowLink({ onChange, onRemove, from, to, text }) {
-    ;
+    
     return (
         <FormControl m={10}>
             <Box display='flex' width='100%' justifyContent='space-between' p={1}>
@@ -81,7 +81,7 @@ function RowLink({ onChange, onRemove, from, to, text }) {
             </Box>
         </FormControl>
     );
-}
+};
 
 const Main = () => {
 
@@ -102,11 +102,11 @@ const Main = () => {
     const [doneFetchHamEul, setDoneFetchHamEul] = useState(false);
     const [doneFetchFlujoMaximo, setDoneFetchFlujoMaximo] = useState(false);
     const [doneFetchArbol, setDoneFetchArbol] = useState(false);
-    const [datos, setDatos] = useState({
+    const [changeData, setChangeData] = useState({
         desde: '',
         hasta: '',
     })
-    const [peakData, setPeakData] = useState({
+    const [changePeakData, setChangePeakData] = useState({
         from: '',
         to: '',
     });
@@ -181,7 +181,7 @@ const Main = () => {
     
             // Distancia entre dos nodos y camino más corto
             const distanceShortes = gra.caminoMasCorto(distanceFrom , distanceTo).distancia;
-            const shortPath = gra.caminoMasCorto(distanceFrom, distanceTo).camino;
+            const shortPathGraph = gra.caminoMasCorto(distanceFrom, distanceTo).camino;
             // Flujo máximo
             const peak = gra.flujoMaximo(peakFlowFrom, peakFlowTo);
     
@@ -191,7 +191,7 @@ const Main = () => {
             setIsEuleriano(esEuleriano);
             setIsConexo(esConexo);
             setDistance(distanceShortes);
-            setShortPath(shortPath);
+            setShortPath(shortPathGraph);
             setPeakFlow(peak);
             setEulerianPath(gra.euleriano(Trayecto.camino))
             setEulerianCycle(gra.euleriano(Trayecto.ciclo))
@@ -298,45 +298,47 @@ const Main = () => {
     
     const handleSubmitFromTo = (e) => {
         e.preventDefault();
-        getFromTo(datos)
+        getFromTo(changeData)
     };
 
     const handleInputChangeFromTo = (e) => {
         e.preventDefault();
-        setDatos({
-            ...datos,
+        setChangeData({
+            ...changeData,
             [e.target.name]: e.target.value,
         })
         
     }
 
-    const getFromTo = (datos) => {
-        datos.desde && datos.hasta
-            setDistanceFrom(Number(datos.desde));
-            setDistanceTo(Number(datos.hasta));
-    }
+    const handleSubmitPeak = (e) => {
+        e.preventDefault();
+        peakFlowFromTo(changePeakData);
+    };
 
-    // Enviar datos para actualizar formulario
-    const peakFlowFromTo = (peakData) => {
-        peakData.from && peakData.to 
-            setPeakFlowFrom(Number(peakData.from));
-            setPeakFlowTo(Number(peakData.to));
-    }
+    const peakFlowFromTo = ({from, to}) => {
+        if( from && to ){
+            setPeakFlowFrom(Number(from));
+            setPeakFlowTo(Number(to));
+        }
+            
+    };
 
+    const getFromTo = ({desde, hasta}) => {
+        if(desde && hasta){
+            setDistanceFrom(Number(desde));
+            setDistanceTo(Number(hasta));
+        }
+    };
 
     const handleInputPeakFlow = (e) => {
         e.preventDefault();
-        setPeakData({
-            ...peakData,
+        setChangePeakData({
+            ...changePeakData,
             [e.target.name]: e.target.value,
         })        
-        
-    }
-
-    const handleSubmitPeak = (e) => {
-        e.preventDefault();
-        peakFlowFromTo(peakData);
     };
+
+
 
 
 
@@ -350,7 +352,7 @@ const Main = () => {
                     <Row
                         {...row}
                         className='main_row'
-                        onChange={(text, value, color) => handleOnChange(index, text, value, color)}
+                        onChange={(text, value) => handleOnChange(index, text, value)}
                         onRemove={() => handleOnRemove(index)}
                         key={index}
                     />
@@ -522,7 +524,7 @@ const Main = () => {
                         </Button>
                     </form>
                     {
-                        datos.desde && datos.hasta ? (
+                        changeData.desde && changeData.hasta ? (
                             <div className='distanceFromTo'>
                                 <p>Los nodos recorridos son los siguientes: </p>
                                 {shortPath.map(item => (
@@ -698,13 +700,13 @@ const Main = () => {
                         </Button>
                     </form>
                     {
-                        peakData.from && peakData.to ? (
+                        changePeakData.from && changePeakData.to ? (
                             <div className='distanceFromTo'>
                                 <p>Flujo máximo es: {peakFlow}</p>
                             </div>
                         ) : (
                             <div className='distanceFromTo'>
-                                <p>Flujo máximo es: {peakFlow}</p>
+                                <p>Flujo máximo resultante es: {peakFlow}</p>
                             </div>
                         )
                     }

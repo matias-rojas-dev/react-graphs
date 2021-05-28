@@ -49,7 +49,7 @@ function initDiagram() {
 }
 
 
-const ContentNotDirecter = ({ data, linksData }) => {
+const NotDirected = ({ data, linksData }) => {
   return (
     <div className="content">
       <ReactDiagram
@@ -61,4 +61,4 @@ const ContentNotDirecter = ({ data, linksData }) => {
     </div>
   )
 }
-export default ContentNotDirecter;
+export default NotDirected;

@@ -8,7 +8,7 @@ import { Adyacente } from '../lib/grafo/nodo.js';
 import { SaveAlt } from '@material-ui/icons';
 import swal from 'sweetalert';
 import CachedIcon from '@material-ui/icons/Cached';
-import ContentNotDirecter from './ContentNotDirected';
+import NotDirected from './NotDirected.js';
 
 function Row({ onChange, onRemove, text }) {
 
@@ -34,7 +34,7 @@ function Row({ onChange, onRemove, text }) {
 }
 
 function RowLink({ onChange, onRemove, from, to, text }) {
-    ;
+    
     return (
         <FormControl m={10}>
             <Box display='flex' width='100%' justifyContent='space-between' p={1}>
@@ -102,11 +102,11 @@ const MainNotDirected = () => {
     const [doneFetchHamEul, setDoneFetchHamEul] = useState(false);
     const [doneFetchFlujoMaximo, setDoneFetchFlujoMaximo] = useState(false);
     const [doneFetchArbol, setDoneFetchArbol] = useState(false);
-    const [datos, setDatos] = useState({
+    const [changeData, setChangeData] = useState({
         desde: '',
         hasta: '',
     })
-    const [peakData, setPeakData] = useState({
+    const [changePeakData, setChangePeakData] = useState({
         from: '',
         to: '',
     });
@@ -181,7 +181,7 @@ const MainNotDirected = () => {
     
             // Distancia entre dos nodos y camino más corto
             const distanceShortes = gra.caminoMasCorto(distanceFrom , distanceTo).distancia;
-            const shortPath = gra.caminoMasCorto(distanceFrom, distanceTo).camino;
+            const shortPathGraph = gra.caminoMasCorto(distanceFrom, distanceTo).camino;
             // Flujo máximo
             const peak = gra.flujoMaximo(peakFlowFrom, peakFlowTo);
     
@@ -191,7 +191,7 @@ const MainNotDirected = () => {
             setIsEuleriano(esEuleriano);
             setIsConexo(esConexo);
             setDistance(distanceShortes);
-            setShortPath(shortPath);
+            setShortPath(shortPathGraph);
             setPeakFlow(peak);
             setEulerianPath(gra.euleriano(Trayecto.camino))
             setEulerianCycle(gra.euleriano(Trayecto.ciclo))
@@ -298,36 +298,39 @@ const MainNotDirected = () => {
     
     const handleSubmitFromTo = (e) => {
         e.preventDefault();
-        getFromTo(datos)
+        getFromTo(changeData)
     };
 
     const handleInputChangeFromTo = (e) => {
         e.preventDefault();
-        setDatos({
-            ...datos,
+        setChangeData({
+            ...changeData,
             [e.target.name]: e.target.value,
         })
         
     }
 
-    const getFromTo = (datos) => {
-        datos.desde && datos.hasta
-            setDistanceFrom(Number(datos.desde));
-            setDistanceTo(Number(datos.hasta));
+    const getFromTo = ({desde, hasta}) => {
+        if(desde && hasta){
+            setDistanceFrom(Number(desde));
+            setDistanceTo(Number(hasta));
+        }
     }
 
-    // Enviar datos para actualizar formulario
-    const peakFlowFromTo = (peakData) => {
-        peakData.from && peakData.to 
-            setPeakFlowFrom(Number(peakData.from));
-            setPeakFlowTo(Number(peakData.to));
+    // Enviar changeData para actualizar formulario
+    const peakFlowFromTo = ({from, to}) => {
+        if(from && to ){
+            setPeakFlowFrom(Number(from));
+            setPeakFlowTo(Number(to));
+        }
+            
     }
 
 
     const handleInputPeakFlow = (e) => {
         e.preventDefault();
-        setPeakData({
-            ...peakData,
+        setChangePeakData({
+            ...changePeakData,
             [e.target.name]: e.target.value,
         })        
         
@@ -335,7 +338,7 @@ const MainNotDirected = () => {
 
     const handleSubmitPeak = (e) => {
         e.preventDefault();
-        peakFlowFromTo(peakData);
+        peakFlowFromTo(changePeakData);
     };
 
 
@@ -348,11 +351,11 @@ const MainNotDirected = () => {
                 {rows.map((row, index) => (
 
                     <Row
-                        {...row}
-                        className='main_row'
-                        onChange={(text, value, color) => handleOnChange(index, text, value, color)}
-                        onRemove={() => handleOnRemove(index)}
-                        key={index}
+                    {...row}
+                    className='main_row'
+                    onChange={(text, value) => handleOnChange(index, text, value)}
+                    onRemove={() => handleOnRemove(index)}
+                    key={index}
                     />
                 ))}
 
@@ -522,7 +525,7 @@ const MainNotDirected = () => {
                         </Button>
                     </form>
                     {
-                        datos.desde && datos.hasta ? (
+                        changeData.desde && changeData.hasta ? (
                             <div className='distanceFromTo'>
                                 <p>Los nodos recorridos son los siguientes: </p>
                                 {shortPath.map(item => (
@@ -698,13 +701,13 @@ const MainNotDirected = () => {
                         </Button>
                     </form>
                     {
-                        peakData.from && peakData.to ? (
+                        changePeakData.from && changePeakData.to ? (
                             <div className='distanceFromTo'>
                                 <p>Flujo máximo es: {peakFlow}</p>
                             </div>
                         ) : (
                             <div className='distanceFromTo'>
-                                <p>Flujo máximo es: {peakFlow}</p>
+                                <p>Flujo máximo resultante es: {peakFlow}</p>
                             </div>
                         )
                     }
@@ -750,7 +753,7 @@ const MainNotDirected = () => {
                     <div className='main_contentInside'>
                         {
                             arbolGenerador &&
-                            <ContentNotDirecter className="hola" data={rows} linksData={arbolGenerador} />
+                            <NotDirected className="hola" data={rows} linksData={arbolGenerador} />
                         }
                     </div>
                 </div >
@@ -764,7 +767,7 @@ const MainNotDirected = () => {
             
             
 
-            <ContentNotDirecter data={rows} linksData={links} />
+            <NotDirected data={rows} linksData={links} />
         </Box >
     )
 }
