@@ -20,31 +20,31 @@ function initDiagram() {
     $(go.Node, 'Auto',  // the Shape will go around the TextBlock
       new go.Binding(),
       $(go.Shape, 'Circle',
-        { name: 'SHAPE', fill: 'white', strokeWidth: 1, portId: ""},
+        { name: 'SHAPE', fill: 'white', strokeWidth: 1, portId: "" },
         // Shape.fill is bound to Node.data.color
         new go.Binding('fill', 'color')),
       $(go.TextBlock,
-        { margin: 20, editable: false, font: "30px Verdana" },  // some room around the text
+        { margin: 20, editable: false, font: "30px Verdana" },
         new go.Binding('text').makeTwoWay()
       )
     );
 
   diagram.linkTemplate =
     $(go.Link,
-      {curve: go.Link.Bezier},
-      $(go.Shape),                           // this is the link shape (the line)
-      $(go.Shape, { toArrow: "Standard" }),  // this is an arrowhead
-      $(go.TextBlock,   
-        {font: "30px Verdana" },                     // this is a Link label
+      { curve: go.Link.Bezier },
+      $(go.Shape),
+      $(go.Shape, { toArrow: "Standard" }),
+      $(go.TextBlock,
+        { font: "30px Verdana" },                     
         new go.Binding("text", "text"))
     );
 
 
   diagram.linkTemplate =
-  $(go.Link,       
-  $(go.Shape)  
-  );
-  
+    $(go.Link,
+      $(go.Shape)
+    );
+
   return diagram;
 }
 

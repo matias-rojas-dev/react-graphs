@@ -24,7 +24,7 @@ function initDiagram() {
         // Shape.fill is bound to Node.data.color
         new go.Binding('fill', 'color')),
       $(go.TextBlock,
-        { margin: 20, editable: false, font: "30px Verdana" },  // some room around the text
+        { margin: 20, editable: false, font: "30px Verdana" },
         new go.Binding('text').makeTwoWay()
       )
     );
@@ -32,10 +32,10 @@ function initDiagram() {
   diagram.linkTemplate =
     $(go.Link,
       {curve: go.Link.Bezier},
-      $(go.Shape),                           // this is the link shape (the line)
-      $(go.Shape, { toArrow: "Standard" }),  // this is an arrowhead
+      $(go.Shape),
+      $(go.Shape, { toArrow: "Standard" }),
       $(go.TextBlock,   
-        {font: "30px Verdana" },                     // this is a Link label
+        {font: "30px Verdana" },
         new go.Binding("text", "text"))
     );
   return diagram;

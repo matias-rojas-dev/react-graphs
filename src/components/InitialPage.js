@@ -3,14 +3,24 @@ import { Link } from 'react-router-dom'
 
 const InitialPage = () => {
     return (
-        <div>
-            <Link to='/dirigido'>
-                dirigido
+        <div className='initialPage_container'>
+            <div className='initalPage_item'>
+                <Link to='/dirigido'>
+                    DIRIGIDO
             </Link>
+            </div>
+            <div className='initalPage_item'>
+                <Link to='/no-dirigido'>
+                    NO DIRIGIDO
+            </Link>
+            </div>
 
-            <Link to='/no-dirigido'>
-                no dirigido
-            </Link>
+            <div className='initalPage_item'>
+                <Link to='/documentacion'>
+                    DOCUMENTACIÓN
+                </Link>
+            </div>
+
         </div>
     )
 }

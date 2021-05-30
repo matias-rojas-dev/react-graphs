@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, TextField } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
 import Content from './Content';
-import DeleteIcon from '@material-ui/icons/Delete';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { Arista } from '../lib/grafo/arista.js';
 import { Grafo, Trayecto } from '../lib/grafo/grafo.js';
@@ -9,79 +8,8 @@ import { SaveAlt } from '@material-ui/icons';
 import swal from 'sweetalert';
 import CachedIcon from '@material-ui/icons/Cached';
 import { Adyacente } from '../lib/grafo/nodo';
-
-function Row({ onChange, onRemove, text }) {
-
-    return (
-        <FormControl className='main_formControl'>
-            <Box display='flex' width='100%' justifyContent='space-between' p={1}>
-                <TextField
-                    fullWidth='true'
-                    className='main_textField'
-                    label='Nombre del nodo'
-                    value={text}
-                    onChange={e => onChange('text', e.target.value)}
-                />
-                <Button
-                    size='small'
-                    startIcon={<DeleteIcon className='main_deleteIcon' style={{ fontSize: 25 }} />}
-                    onClick={onRemove}
-                >
-                </Button>
-            </Box>
-        </FormControl>
-    );
-}
-
-function RowLink({ onChange, onRemove, from, to, text }) {
-    
-    return (
-        <FormControl m={10}>
-            <Box display='flex' width='100%' justifyContent='space-between' p={1}>
-                <TextField
-                    id='filled-number'
-                    label='Desde'
-                    type='number'
-                    value={from}
-                    InputProps={{ inputProps: { min: 0, max: 99 } }}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={e => onChange('from', e.target.value)}
-                />
-                <TextField
-                    id='filled-number'
-                    label='Hasta'
-                    type='number'
-                    value={to}
-                    InputProps={{ inputProps: { min: 0, max: 99 } }}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={e => onChange('to', e.target.value)}
-                />
-
-                <TextField
-                    id='filled-number'
-                    label='Peso'
-                    type='number'
-                    value={text}
-                    InputLabelProps={{
-                        shrink: true
-                    }}
-                    InputProps={{ inputProps: { min: 0, max: 99 } }}
-                    onChange={e => onChange( 'text', e.target.value )}
-                />
-                <Button
-                    size='small'
-                    startIcon={<DeleteIcon className='main_deleteIcon' style={{ fontSize: 25 }} />}
-                    onClick={onRemove}
-                >
-                </Button>
-            </Box>
-        </FormControl>
-    );
-}
+import RowLink from './RowLink';
+import Row from './Row';
 
 const Main = () => {
 
@@ -110,7 +38,6 @@ const Main = () => {
         from: '',
         to: '',
     });
-    // Creando aristas usando la clase Arista
     const [edgesClass, setEdgesClass] = useState([]);
     const [grafo, setGrafo] = useState([]);
     const [arbolGenerador, setArbolGenerador] = useState([])
@@ -119,7 +46,6 @@ const Main = () => {
     const [isHamiltoniano, setIsHamiltoniano] = useState(false);
     const [isEuleriano, setIsEuleriano] = useState(false);
     const [isConexo, setIsConexo] = useState(false);
-    //camino más corto
     const [distance, setDistance] = useState();
     const [shortPath, setShortPath] = useState([]);
     const [distanceFrom, setDistanceFrom] = useState(0);
@@ -155,6 +81,29 @@ const Main = () => {
         (rows[0].length === 0 || links[0].from.length === 0) ? (
             swal('Campos vacíos','Para continuar con la aplicación, debes completar los campos vacíos', 'error')
         ) : setValidation(true);
+    };
+
+    const handleArbol = () => {
+        !doneFetchArbol ? (setDoneFetchArbol(true)) : setDoneFetchArbol(false);
+    }
+
+    const handleFlujoMaximo = () => {
+        !doneFetchFlujoMaximo ? (setDoneFetchFlujoMaximo(true)) : setDoneFetchFlujoMaximo(false);
+    }
+
+    const handleDistance = () => {
+        !doneFetchDistance ? (setDoneFetchDistance(true)) : setDoneFetchDistance(false);
+
+    }
+
+    const handleHamEul = () => {
+        !doneFetchHamEul ? (setDoneFetchHamEul(true)) : setDoneFetchHamEul(false);
+    }
+
+
+
+    const handleMatriz = () => {
+        !doneFetch ? (setDoneFetch(true)) : setDoneFetch(false);
     }
 
 
@@ -225,7 +174,6 @@ const Main = () => {
         }
 
         saveData();
-        console.log(saveData)
     };
 
     const handleOnChangeLinks = (index, from, value, text, to) => {
@@ -263,7 +211,6 @@ const Main = () => {
             ...changeData,
             [e.target.name]: e.target.value,
         })
-        
     };
 
     const handleSubmitPeak = (e) => {
